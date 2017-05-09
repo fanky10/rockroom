@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.benguiman.rockroom.R;
+import com.benguiman.rockroom.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.presenter.SignInPresenter;
 import com.benguiman.rockroom.view.SignInView;
 import com.google.android.gms.auth.api.Auth;
@@ -15,6 +16,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -22,7 +25,8 @@ public class SignInActivity extends BaseActivity implements SignInView, GoogleAp
 
     private static final int RC_SIGN_IN = 1;
     private static final String TAG = SignInActivity.class.getSimpleName();
-    private SignInPresenter presenter;
+    @Inject
+    SignInPresenter presenter;
     private GoogleApiClient googleApiClient;
 
 
@@ -30,9 +34,17 @@ public class SignInActivity extends BaseActivity implements SignInView, GoogleAp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        ButterKnife.bind(this);
-        presenter = SignInPresenter.fromView(this);
+        init();
+        initializeGoogleApiClient();
+    }
 
+    private void init() {
+        ((RockRoomComponentProvider) getApplication()).getRockRoomComponent().inject(this);
+        ButterKnife.bind(this);
+        presenter.init(this);
+    }
+
+    private void initializeGoogleApiClient() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

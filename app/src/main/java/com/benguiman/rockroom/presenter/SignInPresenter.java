@@ -12,13 +12,15 @@ import javax.inject.Inject;
 public class SignInPresenter {
 
     private SignInView view;
-    @Inject
-    UserManager userManager;
+    private UserManager userManager;
 
-    public static SignInPresenter fromView(SignInView view) {
-        SignInPresenter signInPresenter = new SignInPresenter();
-        signInPresenter.view = view;
-        return signInPresenter;
+    @Inject
+    public SignInPresenter(UserManager userManager){
+        this.userManager = userManager;
+    }
+
+    public void init(SignInView view){
+        this.view = view;
     }
 
     public void onSignInButtonClick() {

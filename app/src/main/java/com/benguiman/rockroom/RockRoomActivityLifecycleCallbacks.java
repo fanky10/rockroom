@@ -13,8 +13,12 @@ import javax.inject.Inject;
  */
 public class RockRoomActivityLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
 
-    @Inject
     UserManager userManager;
+
+    @Inject
+    public RockRoomActivityLifecycleCallbacks(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

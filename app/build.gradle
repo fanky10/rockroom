@@ -10,12 +10,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        incremental true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -44,7 +55,7 @@ dependencies {
     compile 'javax.inject:javax.inject:1'
 
     //Guava
-    compile 'com.google.guava:guava:21.0'
+    compile 'com.google.guava:guava:20.0'
 
     apply plugin: 'com.google.gms.google-services'
 }
