@@ -2,47 +2,68 @@ package com.benguiman.rockroom.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.benguiman.rockroom.R;
+import com.benguiman.rockroom.component.RockRoomComponentProvider;
+import com.benguiman.rockroom.presenter.MainPresenter;
+import com.benguiman.rockroom.util.CircleTransform;
+import com.benguiman.rockroom.view.MainView;
+import com.benguiman.rockroom.view.model.UserViewModel;
+import com.squareup.picasso.Picasso;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
+
+    @Inject
+    MainPresenter presenter;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+        initViews();
+    }
+
+    private void initViews() {
+        presenter.loadUserData();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                                               .setAction("Action", null).show());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    private void init() {
+        ((RockRoomComponentProvider) getApplication()).getRockRoomComponent().inject(this);
+        ButterKnife.bind(this);
+        presenter.init(this);
     }
 
     @Override
@@ -100,5 +121,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void loadUserData(UserViewModel userViewModel) {
+        View headerView = navigationView.getHeaderView(0);
+        ImageView avatarView = (ImageView) headerView.findViewById(R.id.avatarView);
+        Picasso.with(this).load(userViewModel.getPhotoUri()).transform(new CircleTransform()).into(avatarView);
+        TextView userNameTextView = (TextView) headerView.findViewById(R.id.userName);
+        userNameTextView.setText(userViewModel.getName());
+        TextView userEmailTextView = (TextView) headerView.findViewById(R.id.userEmail);
+        userEmailTextView.setText(userViewModel.getEmail());
     }
 }

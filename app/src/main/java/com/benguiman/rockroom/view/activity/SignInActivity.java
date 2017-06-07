@@ -3,18 +3,20 @@ package com.benguiman.rockroom.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
 import com.benguiman.rockroom.R;
 import com.benguiman.rockroom.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.presenter.SignInPresenter;
 import com.benguiman.rockroom.view.SignInView;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import javax.inject.Inject;
 
@@ -28,6 +30,7 @@ public class SignInActivity extends BaseActivity implements SignInView, GoogleAp
     @Inject
     SignInPresenter presenter;
     private GoogleApiClient googleApiClient;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
 
     @Override
@@ -83,8 +86,14 @@ public class SignInActivity extends BaseActivity implements SignInView, GoogleAp
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            presenter.handleSignInResult(result.isSuccess());
+            firebaseAuthWithGoogle(result.getSignInAccount());
         }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        firebaseAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(this, task -> presenter.handleSignInResult(task.isSuccessful()));
     }
 
     @Override

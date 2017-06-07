@@ -1,22 +1,23 @@
-package com.benguiman.rockroom.model;
+package com.benguiman.rockroom.view.model;
 
 import android.net.Uri;
 
+
 /**
- * @author benjamin.massello on 4/11/17.
+ * @author benjamin.massello on 6/6/17.
  */
 
-public class User {
+public class UserViewModel {
     private String name;
     private String email;
     private String id;
     private Uri photoUri;
 
-    private User() {
+    private UserViewModel() {
 
     }
 
-    private User(Builder builder) {
+    private UserViewModel(Builder builder) {
         this.name = builder.name;
         this.email = builder.email;
         this.photoUri = builder.photoUri;
@@ -65,8 +66,8 @@ public class User {
             return this;
         }
 
-        public User build() {
-            return new User(this);
+        public UserViewModel build() {
+            return new UserViewModel(this);
         }
     }
 }
