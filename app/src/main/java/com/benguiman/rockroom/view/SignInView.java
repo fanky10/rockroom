@@ -6,6 +6,5 @@ package com.benguiman.rockroom.view;
 
 public interface SignInView {
 
-    void launchSignInIntent();
     void launchMainActivity();
 }

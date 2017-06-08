@@ -23,10 +23,6 @@ public class SignInPresenter {
         this.view = view;
     }
 
-    public void onSignInButtonClick() {
-        view.launchSignInIntent();
-    }
-
     public void handleSignInResult(boolean success) {
         if (success) {
             view.launchMainActivity();
