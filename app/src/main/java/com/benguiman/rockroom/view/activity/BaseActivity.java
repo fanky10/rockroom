@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.benguiman.rockroom.component.RockRoomComponentProvider;
+import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
 
 /**
  * @author benjamin.massello on 4/11/17.

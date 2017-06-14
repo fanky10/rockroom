@@ -3,7 +3,7 @@ package com.benguiman.rockroom.model;
 import android.net.Uri;
 
 /**
- * @author benjamin.massello on 4/11/17.
+ * @author benjamin.massello.
  */
 
 public class User {
@@ -11,10 +11,6 @@ public class User {
     private String email;
     private String id;
     private Uri photoUri;
-
-    private User() {
-
-    }
 
     private User(Builder builder) {
         this.name = builder.name;

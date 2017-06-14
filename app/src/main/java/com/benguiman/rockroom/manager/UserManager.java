@@ -1,7 +1,6 @@
 package com.benguiman.rockroom.manager;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.benguiman.rockroom.model.User;
 import com.google.common.base.Optional;
@@ -12,30 +11,24 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * @author benjamin.massello on 4/11/17.
+ * @author benjamin.massello.
  */
 @Singleton
-public class UserManager implements FirebaseAuth.AuthStateListener {
-
-    private final static String TAG = UserManager.class.getSimpleName();
-
-    private final FirebaseAuth firebaseAuth;
+public class UserManager extends BaseManager implements FirebaseAuth.AuthStateListener {
 
     @Inject
     public UserManager() {
-        firebaseAuth = FirebaseAuth.getInstance();
+        super();
     }
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         // TODO trigger log out
-        Log.d(TAG, "onAuthStateChanged " + String.valueOf(firebaseAuth.getCurrentUser()));
     }
 
     public Optional<User> getUser() {
-        Log.d(TAG, "getUser " + String.valueOf(firebaseAuth.getCurrentUser()));
         User user = null;
-        FirebaseUser firebaseUser = getFirebaseUser();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
             user = new User.Builder()
                     .name(firebaseUser.getDisplayName())
@@ -57,11 +50,6 @@ public class UserManager implements FirebaseAuth.AuthStateListener {
     }
 
     public boolean isUserLoggedIn() {
-        return getFirebaseUser() != null;
-    }
-
-    private FirebaseUser getFirebaseUser(){
-        //TODO this method is not returning a valid user
-        return FirebaseAuth.getInstance().getCurrentUser();
+        return firebaseAuth.getCurrentUser() != null;
     }
 }

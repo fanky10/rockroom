@@ -1,7 +1,7 @@
-package com.benguiman.rockroom.component;
+package com.benguiman.rockroom.di.component;
 
 /**
- * @author benjamin.massello on 5/9/17.
+ * @author benjamin.massello.
  */
 
 public interface RockRoomComponentProvider {

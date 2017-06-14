@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.benguiman.rockroom.R;
-import com.benguiman.rockroom.component.RockRoomComponentProvider;
+import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.presenter.MainPresenter;
 import com.benguiman.rockroom.util.CircleTransform;
 import com.benguiman.rockroom.view.MainView;

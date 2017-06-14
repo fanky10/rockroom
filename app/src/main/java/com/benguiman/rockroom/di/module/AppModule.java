@@ -1,4 +1,4 @@
-package com.benguiman.rockroom.module;
+package com.benguiman.rockroom.di.module;
 
 import com.benguiman.rockroom.RockRoomApplication;
 
@@ -8,9 +8,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * @author benjamin.massello on 4/11/17.
+ * @author benjamin.massello.
  */
-@Module
+@Module()
 public class AppModule {
     RockRoomApplication application;
 

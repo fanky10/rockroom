@@ -23,7 +23,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
  * @author benjamin.massello on 4/3/17.
  */
 public class GoogleSignInHelper implements GoogleApiClient.OnConnectionFailedListener {
-    public static final int RC_SIGN_IN = 1;
+    private static final int RC_SIGN_IN = 1;
 
     private final FragmentActivity activity;
     private GoogleApiClient googleApiClient;
