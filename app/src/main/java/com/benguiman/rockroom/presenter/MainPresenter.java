@@ -4,15 +4,17 @@ import com.benguiman.rockroom.manager.UserManager;
 import com.benguiman.rockroom.model.User;
 import com.benguiman.rockroom.view.MainView;
 import com.benguiman.rockroom.view.model.UserViewModel;
+import com.google.common.base.Optional;
 
 import javax.inject.Inject;
 
 /**
- * @author benjamin.massello on 6/6/17.
+ * @author benjamin.massello.
  */
 
 public class MainPresenter {
 
+    public static final String TAG = MainPresenter.class.getSimpleName();
     private final UserManager userManager;
     private MainView view;
 
@@ -26,8 +28,9 @@ public class MainPresenter {
     }
 
     public void loadUserData() {
-        if (userManager.getUser().isPresent()) {
-            User user = userManager.getUser().get();
+        Optional<User> userOptional = userManager.getUser();
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             UserViewModel userViewModel = new UserViewModel.Builder()
                     .name(user.getName())
                     .email(user.getEmail())

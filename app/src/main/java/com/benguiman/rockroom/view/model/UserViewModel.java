@@ -4,7 +4,7 @@ import android.net.Uri;
 
 
 /**
- * @author benjamin.massello on 6/6/17.
+ * @author benjamin.massello.
  */
 
 public class UserViewModel {
@@ -12,10 +12,6 @@ public class UserViewModel {
     private String email;
     private String id;
     private Uri photoUri;
-
-    private UserViewModel() {
-
-    }
 
     private UserViewModel(Builder builder) {
         this.name = builder.name;

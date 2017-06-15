@@ -6,6 +6,7 @@ import com.benguiman.rockroom.di.module.ManagerModule;
 import com.benguiman.rockroom.view.activity.BaseActivity;
 import com.benguiman.rockroom.view.activity.MainActivity;
 import com.benguiman.rockroom.view.activity.SignInActivity;
+import com.benguiman.rockroom.view.fragment.RoomListFragment;
 
 import javax.inject.Singleton;
 
@@ -24,4 +25,6 @@ public interface RockRoomComponent {
     void inject(SignInActivity signInActivity);
 
     void inject(MainActivity mainActivity);
+
+    void inject(RoomListFragment roomListFragment);
 }

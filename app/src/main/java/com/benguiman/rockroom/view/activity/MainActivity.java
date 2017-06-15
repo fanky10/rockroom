@@ -19,6 +19,7 @@ import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.presenter.MainPresenter;
 import com.benguiman.rockroom.util.CircleTransform;
 import com.benguiman.rockroom.view.MainView;
+import com.benguiman.rockroom.view.fragment.RoomListFragment;
 import com.benguiman.rockroom.view.model.UserViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +64,15 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        loadRoomListFragment();
+    }
+
+    private void loadRoomListFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_content, RoomListFragment.newInstance())
+                .commit();
     }
 
     private void init() {
