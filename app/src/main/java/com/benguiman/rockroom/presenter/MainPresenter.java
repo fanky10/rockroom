@@ -19,7 +19,7 @@ public class MainPresenter {
     private MainView view;
 
     @Inject
-    public MainPresenter(UserManager userManager) {
+    MainPresenter(UserManager userManager) {
         this.userManager = userManager;
     }
 

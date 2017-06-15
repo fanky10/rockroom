@@ -13,7 +13,7 @@ abstract class BaseManager {
     protected final FirebaseAuth firebaseAuth;
     protected final DatabaseReference database;
 
-    protected BaseManager() {
+    BaseManager() {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
     }

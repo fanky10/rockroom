@@ -20,7 +20,7 @@ public class RoomListPresenter {
     private RoomListView view;
 
     @Inject
-    public RoomListPresenter(RoomManager roomManager, RoomViewModelFactory roomViewModelFactory) {
+    RoomListPresenter(RoomManager roomManager, RoomViewModelFactory roomViewModelFactory) {
         this.roomManager = roomManager;
         this.roomViewModelFactory = roomViewModelFactory;
     }

@@ -20,7 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 /**
  * Handles the Google account sign in flow using Firebase.
  *
- * @author benjamin.massello on 4/3/17.
+ * @author benjamin.massello.
  */
 public class GoogleSignInHelper implements GoogleApiClient.OnConnectionFailedListener {
     private static final int RC_SIGN_IN = 1;

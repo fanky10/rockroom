@@ -13,7 +13,7 @@ import javax.inject.Inject;
  */
 public class RockRoomActivityLifecycleCallbacks implements Application.ActivityLifecycleCallbacks {
 
-    UserManager userManager;
+    private UserManager userManager;
 
     @Inject
     public RockRoomActivityLifecycleCallbacks(UserManager userManager) {

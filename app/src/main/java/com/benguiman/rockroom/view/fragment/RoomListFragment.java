@@ -59,11 +59,7 @@ public class RoomListFragment extends Fragment implements RoomListView {
 
     @Override
     public void loadRoomList(List<RoomViewModel> roomList) {
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         roomListRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         roomListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         roomListRecyclerView.setAdapter(RoomViewModelAdapter.newInstance(roomList, getContext()));
     }

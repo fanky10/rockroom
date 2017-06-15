@@ -17,7 +17,7 @@ import javax.inject.Singleton;
 public class UserManager extends BaseManager implements FirebaseAuth.AuthStateListener {
 
     @Inject
-    public UserManager() {
+    UserManager() {
         super();
     }
 

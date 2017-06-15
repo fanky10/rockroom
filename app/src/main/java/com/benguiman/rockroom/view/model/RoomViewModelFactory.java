@@ -15,7 +15,7 @@ import javax.inject.Singleton;
 public class RoomViewModelFactory {
 
     @Inject
-    public RoomViewModelFactory() {
+    RoomViewModelFactory() {
 
     }
 

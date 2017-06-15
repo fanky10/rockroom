@@ -39,7 +39,7 @@ public class RoomManager extends BaseManager {
     }
 
     @Inject
-    public RoomManager(UserManager userManager) {
+    RoomManager(UserManager userManager) {
         super();
         this.userManager = userManager;
         toRoomDTO = new TransformIntoRoomDTOFunction();

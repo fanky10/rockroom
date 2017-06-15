@@ -1,12 +1,10 @@
 package com.benguiman.rockroom.model;
 
-import java.io.Serializable;
-
 /**
  * @author benjamin.massello.
  */
 
-public class Room implements Serializable {
+public class Room {
     private final String id;
     private final String name;
     private final String address;
