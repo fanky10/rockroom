@@ -1,6 +1,11 @@
 package com.benguiman.rockroom.manager;
 
+import android.support.annotation.Nullable;
+
 import com.benguiman.rockroom.model.Room;
+import com.google.common.base.Function;
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +25,8 @@ public class RoomManager extends BaseManager {
 
     private static final String ROOMS = "rooms";
     private final UserManager userManager;
+    private final TransformIntoRoomDTOFunction toRoomDTO;
+    private final TransformIntoRoomFunction toRoom;
 
     public interface OnGetRoomListener {
         void onGetRoom(Room roomOptional);
@@ -35,6 +42,8 @@ public class RoomManager extends BaseManager {
     public RoomManager(UserManager userManager) {
         super();
         this.userManager = userManager;
+        toRoomDTO = new TransformIntoRoomDTOFunction();
+        toRoom = new TransformIntoRoomFunction();
     }
 
     public void saveRoom(Room room) {
@@ -62,9 +71,9 @@ public class RoomManager extends BaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 reference.removeEventListener(this);
-                RoomDTO roomDTO = dataSnapshot.getValue(RoomDTO.class);
+                RoomDTO roomDTO = toRoomDTO.apply(dataSnapshot);
                 if (roomDTO != null) {
-                    listener.onGetRoom(transformIntoRoom(roomDTO));
+                    listener.onGetRoom(toRoom.apply(roomDTO));
                 } else {
                     listener.onRoomNotFound();
                 }
@@ -85,14 +94,12 @@ public class RoomManager extends BaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 reference.removeEventListener(this);
-                List<Room> roomList = new ArrayList<>();
-                for (DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
-                    RoomDTO roomDTO = roomSnapshot.getValue(RoomDTO.class);
-                    if (roomDTO != null) {
-                        roomList.add(transformIntoRoom(roomDTO));
-                    }
-                }
-                listener.onGetRoomList(roomList);
+                listener.onGetRoomList(FluentIterable
+                        .from(dataSnapshot.getChildren())
+                        .transform(toRoomDTO)
+                        .filter(Predicates.<RoomDTO> notNull())
+                        .transform(toRoom)
+                        .toList());
             }
 
             @Override
@@ -104,14 +111,24 @@ public class RoomManager extends BaseManager {
 
     }
 
-    private Room transformIntoRoom(RoomDTO roomDTO) {
-        return new Room.Builder()
-                .id(roomDTO.id)
-                .name(roomDTO.name)
-                .address(roomDTO.address)
-                .photoUrl(roomDTO.photoUrl)
-                .ownerId(roomDTO.ownerId)
-                .build();
+    private static class TransformIntoRoomDTOFunction implements Function<DataSnapshot, RoomDTO> {
+        @Nullable
+        @Override
+        public RoomDTO apply(DataSnapshot roomSnapshot) {
+            return roomSnapshot.getValue(RoomDTO.class);
+        }
     }
 
+    private static class TransformIntoRoomFunction implements Function<RoomDTO, Room> {
+        @Override
+        public Room apply(RoomDTO roomDTO) {
+            return new Room.Builder()
+                    .id(roomDTO.id)
+                    .name(roomDTO.name)
+                    .address(roomDTO.address)
+                    .photoUrl(roomDTO.photoUrl)
+                    .ownerId(roomDTO.ownerId)
+                    .build();
+        }
+    }
 }
