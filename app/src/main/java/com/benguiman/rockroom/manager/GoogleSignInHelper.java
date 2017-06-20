@@ -59,9 +59,11 @@ public class GoogleSignInHelper implements GoogleApiClient.OnConnectionFailedLis
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             GoogleSignInAccount signInAccount = result.getSignInAccount();
-            AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
-            FirebaseAuth.getInstance().signInWithCredential(credential)
-                        .addOnCompleteListener(activity, task);
+            if(signInAccount != null) {
+                AuthCredential credential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
+                FirebaseAuth.getInstance().signInWithCredential(credential)
+                            .addOnCompleteListener(activity, task);
+            }
         }
     }
 

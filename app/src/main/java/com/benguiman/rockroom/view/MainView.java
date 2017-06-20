@@ -6,7 +6,6 @@ import com.benguiman.rockroom.view.model.UserViewModel;
  * @author benjamin.massello on 6/6/17.
  */
 
-public interface MainView {
-
+public interface MainView extends BaseView {
     void loadUserData(UserViewModel userViewModel);
 }

@@ -13,11 +13,10 @@ import javax.inject.Inject;
  * @author benjamin.massello.
  */
 
-public class RoomListPresenter {
+public class RoomListPresenter extends BasePresenter<RoomListView> {
 
     private final RoomManager roomManager;
     private final RoomViewModelFactory roomViewModelFactory;
-    private RoomListView view;
 
     @Inject
     RoomListPresenter(RoomManager roomManager, RoomViewModelFactory roomViewModelFactory) {
@@ -25,8 +24,8 @@ public class RoomListPresenter {
         this.roomViewModelFactory = roomViewModelFactory;
     }
 
-    public void init(final RoomListView view) {
-        this.view = view;
+    @Override
+    public void onViewInitialized() {
         roomManager.getRoomList(new RoomManager.OnGetRoomListListener() {
             @Override
             public void onGetRoomList(List<Room> roomList) {

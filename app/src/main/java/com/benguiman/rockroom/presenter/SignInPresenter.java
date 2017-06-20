@@ -9,18 +9,13 @@ import javax.inject.Inject;
  * @author benjamin.massello on 4/3/17.
  */
 
-public class SignInPresenter {
+public class SignInPresenter extends BasePresenter<SignInView> {
 
-    private SignInView view;
     private UserManager userManager;
 
     @Inject
     SignInPresenter(UserManager userManager) {
         this.userManager = userManager;
-    }
-
-    public void init(SignInView view) {
-        this.view = view;
     }
 
     public void handleSignInResult(boolean success) {
@@ -29,7 +24,9 @@ public class SignInPresenter {
         }
     }
 
-    public void onStart() {
+    @Override
+    protected void onViewInitialized() {
+        super.onViewInitialized();
         if (userManager.isUserLoggedIn()) {
             view.launchMainActivity();
         }

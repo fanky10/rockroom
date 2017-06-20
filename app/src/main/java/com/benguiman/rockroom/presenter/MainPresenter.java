@@ -12,22 +12,17 @@ import javax.inject.Inject;
  * @author benjamin.massello.
  */
 
-public class MainPresenter {
+public class MainPresenter extends BasePresenter<MainView> {
 
-    public static final String TAG = MainPresenter.class.getSimpleName();
     private final UserManager userManager;
-    private MainView view;
 
     @Inject
     MainPresenter(UserManager userManager) {
         this.userManager = userManager;
     }
 
-    public void init(MainView view) {
-        this.view = view;
-    }
-
-    public void loadUserData() {
+    @Override
+    protected void onViewInitialized() {
         Optional<User> userOptional = userManager.getUser();
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -39,5 +34,4 @@ public class MainPresenter {
             view.loadUserData(userViewModel);
         }
     }
-
 }

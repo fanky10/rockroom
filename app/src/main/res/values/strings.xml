@@ -7,4 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="sign_in">Sign In</string>
+    <string name="create_room">Create Room</string>
+    <string name="room_name">Room name</string>
+    <string name="room_address">Room address</string>
 </resources>

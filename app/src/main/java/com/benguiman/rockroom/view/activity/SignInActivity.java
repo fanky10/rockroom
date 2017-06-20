@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.benguiman.rockroom.R;
-import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.manager.GoogleSignInHelper;
 import com.benguiman.rockroom.presenter.SignInPresenter;
 import com.benguiman.rockroom.view.SignInView;
@@ -13,28 +12,23 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignInActivity extends BaseActivity implements SignInView {
+public class SignInActivity extends BaseActivity<SignInPresenter> implements SignInView {
 
-    @Inject
-    SignInPresenter presenter;
     private GoogleSignInHelper googleSignInHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-        init();
+    protected SignInPresenter obtainPresenter() {
+        return getRockRoomComponent().getSignInPresenter();
     }
 
-    private void init() {
-        ((RockRoomComponentProvider) getApplication()).getRockRoomComponent().inject(this);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-        presenter.init(this);
         googleSignInHelper = GoogleSignInHelper.newInstance(this);
     }
 
@@ -60,11 +54,5 @@ public class SignInActivity extends BaseActivity implements SignInView {
                         presenter.handleSignInResult(task.isSuccessful());
                     }
                 });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.onStart();
     }
 }

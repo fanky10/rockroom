@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.benguiman.rockroom.R;
-import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
 import com.benguiman.rockroom.presenter.MainPresenter;
 import com.benguiman.rockroom.util.CircleTransform;
 import com.benguiman.rockroom.view.MainView;
@@ -23,28 +22,28 @@ import com.benguiman.rockroom.view.fragment.RoomListFragment;
 import com.benguiman.rockroom.view.model.UserViewModel;
 import com.squareup.picasso.Picasso;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements MainView, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainView, NavigationView.OnNavigationItemSelectedListener {
 
-    @Inject
-    MainPresenter presenter;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected MainPresenter obtainPresenter() {
+        return getRockRoomComponent().getMainPresenter();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
         initViews();
     }
 
     private void initViews() {
-        presenter.loadUserData();
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,12 +72,6 @@ public class MainActivity extends BaseActivity implements MainView, NavigationVi
                 .beginTransaction()
                 .replace(R.id.main_content, RoomListFragment.newInstance())
                 .commit();
-    }
-
-    private void init() {
-        ((RockRoomComponentProvider) getApplication()).getRockRoomComponent().inject(this);
-        ButterKnife.bind(this);
-        presenter.init(this);
     }
 
     @Override

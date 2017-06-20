@@ -8,6 +8,6 @@ import java.util.List;
  * @author benjamin.massello.
  */
 
-public interface RoomListView {
+public interface RoomListView extends BaseView {
     void loadRoomList(List<RoomViewModel> roomList);
 }

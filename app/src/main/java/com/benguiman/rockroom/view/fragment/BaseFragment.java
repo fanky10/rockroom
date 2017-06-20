@@ -1,8 +1,8 @@
-package com.benguiman.rockroom.view.activity;
+package com.benguiman.rockroom.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
 import com.benguiman.rockroom.di.component.RockRoomComponent;
 import com.benguiman.rockroom.di.component.RockRoomComponentProvider;
@@ -10,10 +10,10 @@ import com.benguiman.rockroom.presenter.BasePresenter;
 import com.benguiman.rockroom.view.BaseView;
 
 /**
- * @author benjamin.massello on 4/11/17.
+ * @author benjamin.massello.
  */
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     protected T presenter;
 
@@ -36,8 +36,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     protected RockRoomComponent getRockRoomComponent() {
-        return ((RockRoomComponentProvider) getApplication()).getRockRoomComponent();
+        return ((RockRoomComponentProvider) getActivity().getApplication()).getRockRoomComponent();
     }
 
     protected abstract T obtainPresenter();
+
 }

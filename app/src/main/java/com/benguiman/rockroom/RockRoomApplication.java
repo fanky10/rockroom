@@ -12,7 +12,7 @@ import com.benguiman.rockroom.di.module.ManagerModule;
  * @author benjamin.massello.
  */
 
-public class RockRoomApplication extends Application implements RockRoomComponentProvider{
+public class RockRoomApplication extends Application implements RockRoomComponentProvider {
 
     RockRoomComponent rockRoomComponent;
 

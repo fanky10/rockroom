@@ -3,10 +3,10 @@ package com.benguiman.rockroom.di.component;
 import com.benguiman.rockroom.RockRoomActivityLifecycleCallbacks;
 import com.benguiman.rockroom.di.module.AppModule;
 import com.benguiman.rockroom.di.module.ManagerModule;
-import com.benguiman.rockroom.view.activity.BaseActivity;
-import com.benguiman.rockroom.view.activity.MainActivity;
-import com.benguiman.rockroom.view.activity.SignInActivity;
-import com.benguiman.rockroom.view.fragment.RoomListFragment;
+import com.benguiman.rockroom.presenter.CreateRoomPresenter;
+import com.benguiman.rockroom.presenter.MainPresenter;
+import com.benguiman.rockroom.presenter.RoomListPresenter;
+import com.benguiman.rockroom.presenter.SignInPresenter;
 
 import javax.inject.Singleton;
 
@@ -20,11 +20,11 @@ import dagger.Component;
 public interface RockRoomComponent {
     RockRoomActivityLifecycleCallbacks getRockRoomActivityLifecycleCallbacks();
 
-    void inject(BaseActivity baseActivity);
+    MainPresenter getMainPresenter();
 
-    void inject(SignInActivity signInActivity);
+    SignInPresenter getSignInPresenter();
 
-    void inject(MainActivity mainActivity);
+    RoomListPresenter getRoomListPresenter();
 
-    void inject(RoomListFragment roomListFragment);
+    CreateRoomPresenter getCreateRoomPresenter();
 }
