@@ -10,4 +10,6 @@
     <string name="create_room">Create Room</string>
     <string name="room_name">Room name</string>
     <string name="room_address">Room address</string>
+    <string name="room_saved">Room saved</string>
+    <string name="error_saving_the_room">Error saving the room</string>
 </resources>

@@ -5,6 +5,7 @@ import com.benguiman.rockroom.di.module.AppModule;
 import com.benguiman.rockroom.di.module.ManagerModule;
 import com.benguiman.rockroom.presenter.CreateRoomPresenter;
 import com.benguiman.rockroom.presenter.MainPresenter;
+import com.benguiman.rockroom.presenter.RoomDetailPresenter;
 import com.benguiman.rockroom.presenter.RoomListPresenter;
 import com.benguiman.rockroom.presenter.SignInPresenter;
 
@@ -27,4 +28,6 @@ public interface RockRoomComponent {
     RoomListPresenter getRoomListPresenter();
 
     CreateRoomPresenter getCreateRoomPresenter();
+
+    RoomDetailPresenter getRoomDetailPresenter();
 }

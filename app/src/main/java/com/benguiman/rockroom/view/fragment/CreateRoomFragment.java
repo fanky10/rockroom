@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.benguiman.rockroom.R;
 import com.benguiman.rockroom.presenter.CreateRoomPresenter;
 import com.benguiman.rockroom.view.CreateRoomView;
+import com.benguiman.rockroom.view.model.RoomViewModel;
 
 import butterknife.ButterKnife;
 
@@ -17,16 +19,6 @@ import butterknife.ButterKnife;
  */
 
 public class CreateRoomFragment extends BaseFragment<CreateRoomPresenter> implements CreateRoomView {
-
-    public static final String ROOM_ID = "room_id";
-
-    public static CreateRoomFragment newInstance(String roomId) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ROOM_ID, roomId);
-        CreateRoomFragment createRoomFragment = new CreateRoomFragment();
-        createRoomFragment.setArguments(bundle);
-        return createRoomFragment;
-    }
 
     @Override
     protected CreateRoomPresenter obtainPresenter() {
@@ -42,7 +34,12 @@ public class CreateRoomFragment extends BaseFragment<CreateRoomPresenter> implem
     }
 
     @Override
-    public String getRoomId() {
-        return getArguments().getString(ROOM_ID);
+    public void onSaveRoom(RoomViewModel roomViewModel) {
+        Toast.makeText(getContext(), R.string.room_saved, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveRoomError() {
+        Toast.makeText(getContext(), R.string.error_saving_the_room, Toast.LENGTH_SHORT).show();
     }
 }

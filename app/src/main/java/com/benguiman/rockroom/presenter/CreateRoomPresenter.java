@@ -3,6 +3,8 @@ package com.benguiman.rockroom.presenter;
 import com.benguiman.rockroom.manager.RoomManager;
 import com.benguiman.rockroom.model.Room;
 import com.benguiman.rockroom.view.CreateRoomView;
+import com.benguiman.rockroom.view.model.RoomViewModel;
+import com.benguiman.rockroom.view.model.RoomViewModelFactory;
 
 import javax.inject.Inject;
 
@@ -13,22 +15,27 @@ import javax.inject.Inject;
 public class CreateRoomPresenter extends BasePresenter<CreateRoomView> {
 
     private final RoomManager roomManager;
+    private final RoomViewModelFactory roomViewModelFactory;
 
     @Inject
-    CreateRoomPresenter(RoomManager roomManager) {
+    CreateRoomPresenter(RoomManager roomManager, RoomViewModelFactory roomViewModelFactory) {
         this.roomManager = roomManager;
+        this.roomViewModelFactory = roomViewModelFactory;
     }
 
-    @Override
-    protected void onViewInitialized() {
-        roomManager.getRoom(view.getRoomId(), new RoomManager.OnGetRoomListener() {
+    public void saveRoom(RoomViewModel roomViewModel) {
+        Room room = new Room.Builder()
+                .name(roomViewModel.getName())
+                .address(roomViewModel.getAddress())
+                .build();
+        roomManager.saveRoom(room, new RoomManager.OnSaveRoomListener() {
             @Override
-            public void onGetRoom(Room roomOptional) {
+            public void onSaveRoom(Room room) {
 
             }
 
             @Override
-            public void onRoomNotFound() {
+            public void onError() {
 
             }
         });

@@ -24,12 +24,11 @@ import javax.inject.Singleton;
 public class RoomManager extends BaseManager {
 
     private static final String ROOMS = "rooms";
-    private final UserManager userManager;
     private final TransformIntoRoomDTOFunction toRoomDTO;
     private final TransformIntoRoomFunction toRoom;
 
     public interface OnGetRoomListener {
-        void onGetRoom(Room roomOptional);
+        void onGetRoom(Room room);
 
         void onRoomNotFound();
     }
@@ -38,20 +37,25 @@ public class RoomManager extends BaseManager {
         void onGetRoomList(List<Room> roomList);
     }
 
+    public interface OnSaveRoomListener {
+        void onSaveRoom(Room room);
+
+        void onError();
+    }
+
     @Inject
-    RoomManager(UserManager userManager) {
+    RoomManager() {
         super();
-        this.userManager = userManager;
         toRoomDTO = new TransformIntoRoomDTOFunction();
         toRoom = new TransformIntoRoomFunction();
     }
 
-    public void saveRoom(Room room) {
+    public void saveRoom(Room room, final OnSaveRoomListener listener) {
         DatabaseReference reference = database
                 .child(ROOMS)
                 .push();
 
-        RoomDTO roomDTO = new RoomDTO();
+        final RoomDTO roomDTO = new RoomDTO();
         roomDTO.id = reference.getKey();
 
         roomDTO.name = room.getName();
@@ -59,7 +63,16 @@ public class RoomManager extends BaseManager {
         roomDTO.photoUrl = room.getPhotoUrl();
         roomDTO.ownerId = room.getOwnerId();
 
-        reference.setValue(roomDTO);
+        reference.setValue(roomDTO, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    listener.onSaveRoom(toRoom.apply(roomDTO));
+                } else {
+                    listener.onError();
+                }
+            }
+        });
     }
 
     public void getRoom(String id, final OnGetRoomListener listener) {
