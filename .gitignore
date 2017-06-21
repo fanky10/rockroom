@@ -54,3 +54,6 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+# keep ci dummy api json file
+!/ci/extras/google-services.json

@@ -13,7 +13,8 @@ android:
 before_install:
   - chmod +x gradlew
   - echo 'DEBUG -- ANDROID_HOME' & echo $ANDROID_HOME
-  - cp -r ci/licenses $ANDROID_HOME/licenses
+  - cp -rf ci/licenses $ANDROID_HOME/licenses
+  - cp -f ci/extras/google-services.json app/
   # Comment out the lines below to list suggested Android SDK components.
   # - android list sdk -e || true
   # Comment out the lines below to list available Android SDK components.
@@ -24,5 +25,7 @@ before_install:
   # - android list device -c || true
 
 script:
+# TODO: depending on the target branch (development / release / master) 
+# execute different build command
   - echo "Building app"
-  - ./gradlew build
+  - ./gradlew assembleDebug
