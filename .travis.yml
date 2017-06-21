@@ -1,0 +1,27 @@
+language: android
+jdk:
+- oraclejdk8
+android:
+  components:
+    - tools
+    - build-tools-25.0.3
+    - android-25
+    - extra-android-m2repository
+    - extra-google-google_play_services
+    - extra-google-m2repository
+
+before_install:
+  - chmod +x gradlew
+  - echo 'DEBUG -- CURRENT SDK'
+  # Comment out the lines below to list suggested Android SDK components.
+  # - android list sdk -e || true
+  # Comment out the lines below to list available Android SDK components.
+  # - android list sdk -a -e || true
+  # Comment out the lines below to list available AVDs, Android targets and device definitions.
+  # - android list avd -c || true
+  # - android list target -c || true
+  # - android list device -c || true
+
+script:
+  - echo "Building app"
+  - ./gradlew build
