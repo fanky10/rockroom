@@ -12,7 +12,8 @@ android:
 
 before_install:
   - chmod +x gradlew
-  - echo 'DEBUG -- CURRENT SDK'
+  - echo 'DEBUG -- ANDROID_HOME' & echo $ANDROID_HOME
+  - cp -r ci/licenses $ANDROID_HOME/licenses
   # Comment out the lines below to list suggested Android SDK components.
   # - android list sdk -e || true
   # Comment out the lines below to list available Android SDK components.
